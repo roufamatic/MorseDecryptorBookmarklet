@@ -1,3 +1,4 @@
+(function(){
 var charCodes=new Array(36); 
 charCodes['.-']='A';
 charCodes['-...']='B';
@@ -35,6 +36,29 @@ charCodes['--...']='7';
 charCodes['---..']='8';
 charCodes['----.']='9';
 charCodes['-----']='0';
+charCodes['.-.-.-']='.';
+charCodes['--..--']=',';
+charCodes['..--..']='?';
+charCodes['-....-']='-';
+charCodes['-...-']='=';
+charCodes['---...']=':';
+charCodes['-.-.-.']=';';
+charCodes['-.--.']='(';
+charCodes['-.--.-']=')';
+charCodes['-..-.']='/';
+charCodes['.-..-.']='\'\'';
+charCodes['...-..-']='$';
+charCodes['.----.']='\'';
+charCodes['.-.-..']='\n';
+charCodes['..--.-']='_';
+charCodes['.--.-.']='@';
+charCodes['---.']='!';
+charCodes['-.-.--']='!';
+charCodes['.-.-.']='+';
+charCodes['.-...']='~';
+charCodes['...-.-']='#';
+charCodes['. ...']='&';
+charCodes['-..-.']='/';
 
 var decrypt = function() {
 	var txt = getSelectionText();
@@ -50,7 +74,7 @@ var decrypt = function() {
 		}
 		else {
 			if (charCodes[curSeq]) phrase += charCodes[curSeq];
-			else phrase += ' ';
+			else if (phrase.length&&phrase[phrase.length-1]!==' ') phrase += ' ';
 			curSeq = '';
 		}
 		i++;
@@ -77,3 +101,5 @@ var getSelectionText = function() {
     }
 	return text;
 };
+decrypt();
+})();
