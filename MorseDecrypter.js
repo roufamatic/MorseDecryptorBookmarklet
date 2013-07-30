@@ -1,4 +1,10 @@
 (function(){
+var DIT = '.';
+var DAH = '-';
+
+var dits = ['.','·'];
+var dahs = ['_','-','=','–'];
+
 var charCodes=new Array(36); 
 charCodes['.-']='A';
 charCodes['-...']='B';
@@ -61,15 +67,14 @@ charCodes['. ...']='&';
 charCodes['-..-.']='/';
 
 var decrypt = function() {
-	var txt = getSelectionText();
+	var txt = clean(getSelectionText());
 	var decrypted = '';
 	var i = 0;
 	var curSeq = '';
 	var phrase = '';
 	while (i < txt.length) {
 		var curChar = txt[i];
-		if (curChar === '_') curChar = '-';
-		if (curChar === '.' || curChar === '-') {
+		if (curChar === DIT || curChar === DAH) {
 			curSeq += curChar;
 		}
 		else {
@@ -81,6 +86,20 @@ var decrypt = function() {
 	}
 	if (charCodes[curSeq]) phrase += charCodes[curSeq];
 	alert(phrase);
+};
+
+var clean = function(txt) {
+	var output = txt;
+	var reDits = new RegExp('[\\' + dits.join('\\') + ']','g');
+	var reDahs = new RegExp('[\\' + dahs.join('\\') + ']','g');
+	var reNada = new RegExp('[^\\' + dits.join('\\') + dahs.join('\\') + ']', 'g');
+	
+	output = output.replace(/^\s*/,'').replace(/\s*$/,'');
+	output = output.replace(reDits, DIT);
+	output = output.replace(reDahs, DAH);
+	output = output.replace(reNada, ' ');
+	
+	return output;
 };
 
 var getSelectionText = function() {
